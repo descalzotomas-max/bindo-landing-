@@ -1526,7 +1526,7 @@ footer { background:var(--darker);border-top:1px solid var(--border);padding:56p
 <section class="hero" id="hero">
   <div class="hero-grid-bg"></div>
   <div class="hero-glow"></div>
-  <div class="hero-inner">
+  <div class="hero-inner" id="hero-inner">
 
     <!-- LEFT -->
     <div>
@@ -1913,6 +1913,28 @@ footer { background:var(--darker);border-top:1px solid var(--border);padding:56p
 </footer>
 
 <script>
+// Force hero 1-col on mobile
+(function(){
+  function fixHero(){
+    var el = document.getElementById('hero-inner');
+    if(!el) return;
+    if(window.innerWidth <= 960){
+      el.style.gridTemplateColumns = '1fr';
+      el.style.gap = '24px';
+      var prod = el.querySelector('.hero-product');
+      if(prod){
+        prod.style.display = 'block';
+        prod.style.width = '100%';
+        prod.style.maxWidth = '100%';
+        var img = prod.querySelector('img');
+        if(img){ img.style.width='100%'; img.style.height='auto'; img.style.borderRadius='14px'; }
+      }
+    }
+  }
+  fixHero();
+  window.addEventListener('resize', fixHero);
+})();
+
 // ─── MOBILE MENU ───
 function toggleMobMenu() {
   const menu = document.getElementById('mob-menu');
