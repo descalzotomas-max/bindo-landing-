@@ -1199,6 +1199,45 @@ footer { background:var(--darker);border-top:1px solid var(--border);padding:56p
   }
 }
 
+
+/* ── FLOATING CTA MOBILE ── */
+#mobile-float-cta {
+  display: none;
+}
+@media(max-width:960px) {
+  #mobile-float-cta {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 400;
+    padding: 12px 20px 20px;
+    background: linear-gradient(to top, var(--darker) 70%, transparent);
+  }
+  #mobile-float-cta a {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background: var(--lime);
+    color: #0E0E0E;
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    padding: 16px;
+    border-radius: 10px;
+    text-decoration: none;
+    box-shadow: 0 4px 24px rgba(200,244,0,.3);
+  }
+}
+
+@media(max-width:960px) {
+  .hero-h1 { font-size: clamp(32px, 9vw, 48px) !important; letter-spacing: -1px !important; }
+  .hero-product { display: block !important; }
+  .hero-product img { border-radius: 12px; }
+  .hero-inner { gap: 28px; }
+  .hero-chip { display: none !important; }
+}
 </style>
 </head>
 <body>
@@ -1236,9 +1275,6 @@ footer { background:var(--darker);border-top:1px solid var(--border);padding:56p
           <div class="fb-icon">🤝</div>
           <div class="fb-text"><strong>Implementación incluida</strong> — No tiramos un software y nos vamos</div>
         </div>
-      </div>
-      <div class="focus-quote" style="margin-top:28px">
-        <div class="fq-text">"Lo que quiero es que el socio sienta el club aunque no venga. Y que yo no tenga que mandar el mismo mensaje en 10 grupos distintos."</div>
       </div>
     </div>
 
@@ -1515,11 +1551,6 @@ footer { background:var(--darker);border-top:1px solid var(--border);padding:56p
         </a>
         <a href="#producto" class="btn-ghost">Ver el producto →</a>
       </div>
-      <div class="hero-quote">
-        <div class="quote-line"></div>
-        <div class="quote-body">
-          <div class="quote-text">"Lo que quiero es que el socio sienta el club aunque no venga. Y que yo no tenga que mandar el mismo mensaje en 10 grupos distintos."</div>
-        </div>
       </div>
     </div>
 
@@ -2097,5 +2128,10 @@ function handleSubmit(btn) {
   }, 1500);
 }
 </script>
+
+<!-- FLOATING CTA MOBILE -->
+<div id="mobile-float-cta">
+  <a href="javascript:void(0)" onclick="openFocus(event)">Agendar Demo Gratis →</a>
+</div>
 </body>
 </html>
