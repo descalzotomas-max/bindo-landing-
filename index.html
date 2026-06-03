@@ -169,7 +169,7 @@ nav {
 
 .hero-h1 {
   font-family: 'Syne', sans-serif;
-  font-size: clamp(36px, 3vw, 46px);
+  font-size: clamp(36px, 3.5vw, 54px);
   font-weight: 800;
   line-height: 1.04;
   letter-spacing: -2px;
@@ -1200,11 +1200,14 @@ footer { background:var(--darker);border-top:1px solid var(--border);padding:56p
 }
 
 
-.testimonials-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px; }
-
 /* ── FLOATING CTA MOBILE ── */
 #mobile-float-cta {
   display: none;
+  opacity: 0;
+  transition: opacity .3s ease;
+}
+#mobile-float-cta.visible {
+  opacity: 1;
 }
 @media(max-width:960px) {
   #mobile-float-cta {
@@ -1214,8 +1217,12 @@ footer { background:var(--darker);border-top:1px solid var(--border);padding:56p
     left: 0;
     right: 0;
     z-index: 400;
-    padding: 12px 20px 20px;
+    padding: 10px 20px 18px;
     background: linear-gradient(to top, var(--darker) 70%, transparent);
+    pointer-events: none;
+  }
+  #mobile-float-cta.visible {
+    pointer-events: auto;
   }
   #mobile-float-cta a {
     display: block;
@@ -1224,9 +1231,9 @@ footer { background:var(--darker);border-top:1px solid var(--border);padding:56p
     background: var(--lime);
     color: #0E0E0E;
     font-family: 'Syne', sans-serif;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 800;
-    padding: 16px;
+    padding: 14px;
     border-radius: 10px;
     text-decoration: none;
     box-shadow: 0 4px 24px rgba(200,244,0,.3);
@@ -1236,11 +1243,12 @@ footer { background:var(--darker);border-top:1px solid var(--border);padding:56p
 @media(max-width:960px) {
   /* Hero layout: texto arriba, imagen abajo a full width */
   .hero-inner {
-    grid-template-columns: 1fr !important;
-    gap: 20px;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 16px;
+    align-items: center;
   }
   .hero-h1 {
-    font-size: clamp(28px, 7vw, 38px) !important;
+    font-size: clamp(20px, 5vw, 30px) !important;
     letter-spacing: -0.5px !important;
     margin-bottom: 8px !important;
   }
@@ -1710,7 +1718,7 @@ footer { background:var(--darker);border-top:1px solid var(--border);padding:56p
 <!-- ═══ RESULTADO EN 30 DÍAS ═══ -->
 <section class="section" style="padding-top:0;padding-bottom:80px">
   <div class="container">
-    <div class="reveal" class="testimonials-grid" style="background:var(--card);border:1px solid var(--border-lime);border-radius:16px;padding:48px;overflow:hidden;position:relative">
+    <div class="reveal" style="background:var(--card);border:1px solid var(--border-lime);border-radius:16px;padding:48px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;overflow:hidden;position:relative" class="testimonials-grid">
       <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--lime),transparent)"></div>
       <div style="padding:24px 28px;border-right:1px solid var(--border)">
         <div style="font-size:32px;margin-bottom:12px">🎯</div>
@@ -1748,7 +1756,7 @@ footer { background:var(--darker);border-top:1px solid var(--border);padding:56p
       <div class="perf-visual-box">
         <div class="pvb-header">
           <div class="pvb-title">Reporte Semanal · Plantel Principal</div>
-          <div class="pvb-badge">EN VIVO</div>
+          <div class="pvb-badge" style="white-space:nowrap;">EN VIVO</div>
         </div>
         <div class="pvb-body">
           <div class="pvb-player-card">
@@ -1786,7 +1794,7 @@ footer { background:var(--darker);border-top:1px solid var(--border);padding:56p
   <div class="container">
     <div class="reveal" style="text-align:center">
       <div class="section-label" style="justify-content:center">Proceso</div>
-      <h2 class="section-title" style="text-align:center">De la demo al club<br>ordenado en 3 pasos</h2>
+      <h2 class="section-title" style="text-align:center">Sistema de implementación con<br>un equipo que acompaña<br>la gestión del cambio</h2>
       <p class="section-sub" style="margin:0 auto;text-align:center">Sin instalaciones. Sin equipos de IT. Un proceso pensado para clubes que no tienen tiempo que perder.</p>
     </div>
     <div class="steps-row reveal">
@@ -2004,6 +2012,23 @@ function toggleMobMenu() {
       btn.setAttribute('aria-expanded', 'false');
     }
   });
+})();
+
+// Float CTA: show after hero CTA is out of view
+(function() {
+  const floatCta = document.getElementById('mobile-float-cta');
+  const heroCta = document.querySelector('.btn-primary');
+  if (!floatCta || !heroCta) return;
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) {
+        floatCta.classList.add('visible');
+      } else {
+        floatCta.classList.remove('visible');
+      }
+    });
+  }, { threshold: 0 });
+  obs.observe(heroCta);
 })();
 
 // Scroll progress
