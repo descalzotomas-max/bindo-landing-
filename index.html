@@ -169,7 +169,7 @@ nav {
 
 .hero-h1 {
   font-family: 'Syne', sans-serif;
-  font-size: clamp(40px, 4.5vw, 62px);
+  font-size: clamp(48px, 5.5vw, 72px);
   font-weight: 800;
   line-height: 1.04;
   letter-spacing: -2px;
@@ -1232,11 +1232,31 @@ footer { background:var(--darker);border-top:1px solid var(--border);padding:56p
 }
 
 @media(max-width:960px) {
-  .hero-h1 { font-size: clamp(32px, 9vw, 48px) !important; letter-spacing: -1px !important; }
-  .hero-product { display: block !important; }
-  .hero-product img { border-radius: 12px; }
-  .hero-inner { gap: 28px; }
+  /* Hero layout: texto arriba, imagen abajo a full width */
+  .hero-inner {
+    grid-template-columns: 1fr !important;
+    gap: 20px;
+  }
+  .hero-h1 {
+    font-size: clamp(28px, 7vw, 38px) !important;
+    letter-spacing: -0.5px !important;
+    margin-bottom: 8px !important;
+  }
+  .hero-sub-hook { font-size: 16px !important; margin-bottom: 14px !important; }
+  .hero-desc { font-size: 13px !important; margin-bottom: 20px !important; line-height: 1.6; }
+  .hero-pill { margin-bottom: 16px; }
+  .hero-actions { gap: 10px; }
+  .hero-product {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+  }
+  .hero-product .product-frame img { border-radius: 12px; }
   .hero-chip { display: none !important; }
+  /* Padding bottom para que el CTA flotante no tape contenido */
+  .hero { padding-bottom: 90px !important; }
+  body { padding-bottom: 80px; }
 }
 </style>
 </head>
