@@ -1173,7 +1173,6 @@ footer { background:var(--darker);border-top:1px solid var(--border);padding:56p
   .hero-h1 { font-size: clamp(32px, 9vw, 48px) !important; letter-spacing: -1.5px !important; line-height: 1.02 !important; margin-bottom: 16px !important }
 
   /* Imagen mobile: visible entre h1 y sub-hook */
-  .hero-img-mobile { display: block; margin-bottom: 20px; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.7) }
 
   /* Sub-hook */
   .hero-sub-hook { font-size: 15px !important; margin-bottom: 20px !important; line-height: 1.5 }
@@ -1187,7 +1186,7 @@ footer { background:var(--darker);border-top:1px solid var(--border);padding:56p
   .btn-ghost { display: none }
 
   /* Imagen desktop: ocultar en mobile (se muestra la mobile) */
-  .hero-product { display: none !important }
+  .hero-product { display: block !important; width: 100% !important; max-width: 100% !important; margin: 0 !important }
   .hero-chip { display: none !important }
   body { padding-bottom: 80px }
 
@@ -1225,16 +1224,7 @@ footer { background:var(--darker);border-top:1px solid var(--border);padding:56p
 /* ── FLOATING CTA MOBILE ── */
 .testimonials-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px; }
 
-#mobile-float-cta {
-  display: none;
-  opacity: 0;
-  transition: opacity .3s;
-  pointer-events: none;
-}
-#mobile-float-cta.visible {
-  opacity: 1;
-  pointer-events: auto;
-}
+/* float CTA controlled by @media */
 
 
 
@@ -1244,7 +1234,6 @@ footer { background:var(--darker);border-top:1px solid var(--border);padding:56p
 .pill-text-full { display: inline }
 
 /* ── HERO IMG MOBILE: solo visible en mobile ── */
-.hero-img-mobile { display: none }
 </style>
 </head>
 <body>
@@ -1544,10 +1533,6 @@ footer { background:var(--darker);border-top:1px solid var(--border);padding:56p
         Tu club, en el bolsillo<br>
         <span class="lime">de cada socio.</span>
       </h1>
-      <!-- Imagen aquí solo en mobile (la imagen derecha se oculta en mobile) -->
-      <div class="hero-img-mobile">
-        <img src="hero.png" alt="Bindo App" style="width:100%;height:auto;display:block;">
-      </div>
       <p class="hero-sub-hook">
         Hoy tu club vive en +15 grupos de WhatsApp.<br>
         <span>Con Bindo, todo pasa en una sola app.</span>
@@ -1933,6 +1918,11 @@ function toggleMobMenu() {
   const isOpen = menu.classList.toggle('is-open');
   btn.classList.toggle('is-open', isOpen);
   document.body.style.overflow = isOpen ? 'hidden' : '';
+  // Update float CTA after menu closes
+  if (!isOpen) {
+    var f = document.getElementById('mobile-float-cta');
+    if (f) f.classList.toggle('visible', window.scrollY > 400);
+  }
 }
 
 // Float CTA: visible after scrolling 500px
