@@ -1161,16 +1161,33 @@ footer { background:var(--darker);border-top:1px solid var(--border);padding:56p
   .urgency-text { font-size: 12px }
 
   /* HERO */
-  .hero { padding: 32px 20px 100px !important; min-height: auto }
-  .hero-inner { grid-template-columns: 1fr !important; gap: 24px; align-items: start }
-  .hero-pill { font-size: 10px !important; padding: 4px 10px !important; margin-bottom: 12px }
-  .hero-h1 { font-size: clamp(32px, 9vw, 48px) !important; letter-spacing: -1.5px !important; line-height: 1.02 !important; margin-bottom: 14px !important }
-  .hero-sub-hook { font-size: 15px !important; margin-bottom: 12px !important }
-  .hero-desc { font-size: 13px !important; margin-bottom: 20px !important; line-height: 1.6 }
+  .hero { padding: 28px 20px 100px !important; min-height: auto }
+  .hero-inner { grid-template-columns: 1fr !important; gap: 0; align-items: start }
+
+  /* Pill: texto corto */
+  .pill-text-mobile { display: inline }
+  .pill-text-full { display: none }
+  .hero-pill { font-size: 11px !important; padding: 5px 12px !important; margin-bottom: 14px; white-space: nowrap }
+
+  /* Headline */
+  .hero-h1 { font-size: clamp(32px, 9vw, 48px) !important; letter-spacing: -1.5px !important; line-height: 1.02 !important; margin-bottom: 16px !important }
+
+  /* Imagen mobile: visible entre h1 y sub-hook */
+  .hero-img-mobile { display: block; margin-bottom: 16px; margin-left: -4px; margin-right: -4px }
+
+  /* Sub-hook */
+  .hero-sub-hook { font-size: 15px !important; margin-bottom: 20px !important; line-height: 1.5 }
+
+  /* Desc: ocultar en mobile */
+  .hero-desc { display: none !important }
+
+  /* CTA: botón ancho, 1 línea */
   .hero-actions { flex-direction: column; gap: 10px; align-items: stretch }
-  .btn-primary { font-size: 15px !important; padding: 15px 20px !important; justify-content: center; white-space: nowrap }
+  .btn-primary { font-size: 15px !important; padding: 16px 20px !important; justify-content: center; white-space: nowrap }
   .btn-ghost { display: none }
-  .hero-product { display: block !important; width: 100% !important; max-width: 100% !important; margin: 0 !important }
+
+  /* Imagen desktop: ocultar en mobile (se muestra la mobile) */
+  .hero-product { display: none !important }
   .hero-chip { display: none !important }
   body { padding-bottom: 80px }
 
@@ -1221,6 +1238,13 @@ footer { background:var(--darker);border-top:1px solid var(--border);padding:56p
 
 
 
+
+/* ── PILL: texto según dispositivo ── */
+.pill-text-mobile { display: none }
+.pill-text-full { display: inline }
+
+/* ── HERO IMG MOBILE: solo visible en mobile ── */
+.hero-img-mobile { display: none }
 </style>
 </head>
 <body>
@@ -1515,11 +1539,15 @@ footer { background:var(--darker);border-top:1px solid var(--border);padding:56p
 
     <!-- LEFT -->
     <div>
-      <div class="hero-pill"><div class="pill-dot"></div>La casa digital del club — Todo en un solo lugar</div>
+      <div class="hero-pill"><div class="pill-dot"></div><span class="pill-text-full">La casa digital del club — Todo en un solo lugar</span><span class="pill-text-mobile">Todo en un solo lugar</span></div>
       <h1 class="hero-h1">
         Tu club, en el bolsillo<br>
         <span class="lime">de cada socio.</span>
       </h1>
+      <!-- Imagen aquí solo en mobile (la imagen derecha se oculta en mobile) -->
+      <div class="hero-img-mobile">
+        <img src="hero.png" alt="Bindo App" style="width:100%;height:auto;display:block;border-radius:14px;">
+      </div>
       <p class="hero-sub-hook">
         Hoy tu club vive en +15 grupos de WhatsApp.<br>
         <span>Con Bindo, todo pasa en una sola app.</span>
