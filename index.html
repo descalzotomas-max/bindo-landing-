@@ -169,10 +169,10 @@ nav {
 
 .hero-h1 {
   font-family: 'Syne', sans-serif;
-  font-size: clamp(48px, 5.5vw, 72px);
+  font-size: clamp(52px, 6.5vw, 82px);
   font-weight: 800;
   line-height: 1.04;
-  letter-spacing: -2px;
+  letter-spacing: -3px;
   color: #fff;
   margin-bottom: 10px;
   animation: fadeUp .5s .08s ease both;
@@ -1257,6 +1257,19 @@ footer { background:var(--darker);border-top:1px solid var(--border);padding:56p
   /* Padding bottom para que el CTA flotante no tape contenido */
   .hero { padding-bottom: 90px !important; }
   body { padding-bottom: 80px; }
+
+  /* Testimonials en columna */
+  .testimonials-grid {
+    grid-template-columns: 1fr !important;
+    gap: 0 !important;
+  }
+  .testimonials-grid > div {
+    border-right: none !important;
+    border-bottom: 1px solid var(--border);
+  }
+  .testimonials-grid > div:last-child {
+    border-bottom: none;
+  }
 }
 </style>
 </head>
@@ -1695,7 +1708,7 @@ footer { background:var(--darker);border-top:1px solid var(--border);padding:56p
 <!-- ═══ RESULTADO EN 30 DÍAS ═══ -->
 <section class="section" style="padding-top:0;padding-bottom:80px">
   <div class="container">
-    <div class="reveal" style="background:var(--card);border:1px solid var(--border-lime);border-radius:16px;padding:48px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;overflow:hidden;position:relative">
+    <div class="reveal" style="background:var(--card);border:1px solid var(--border-lime);border-radius:16px;padding:48px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;overflow:hidden;position:relative" class="testimonials-grid">
       <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--lime),transparent)"></div>
       <div style="padding:24px 28px;border-right:1px solid var(--border)">
         <div style="font-size:32px;margin-bottom:12px">🎯</div>
