@@ -1201,13 +1201,17 @@ footer { background:var(--darker);border-top:1px solid var(--border);padding:56p
 
 
 /* ── FLOATING CTA MOBILE ── */
+.testimonials-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px; }
+
 #mobile-float-cta {
   display: none;
   opacity: 0;
-  transition: opacity .3s ease;
+  transition: opacity .3s;
+  pointer-events: none;
 }
 #mobile-float-cta.visible {
   opacity: 1;
+  pointer-events: auto;
 }
 @media(max-width:960px) {
   #mobile-float-cta {
@@ -1217,12 +1221,8 @@ footer { background:var(--darker);border-top:1px solid var(--border);padding:56p
     left: 0;
     right: 0;
     z-index: 400;
-    padding: 10px 20px 18px;
+    padding: 12px 20px 20px;
     background: linear-gradient(to top, var(--darker) 70%, transparent);
-    pointer-events: none;
-  }
-  #mobile-float-cta.visible {
-    pointer-events: auto;
   }
   #mobile-float-cta a {
     display: block;
@@ -1231,9 +1231,9 @@ footer { background:var(--darker);border-top:1px solid var(--border);padding:56p
     background: var(--lime);
     color: #0E0E0E;
     font-family: 'Syne', sans-serif;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 800;
-    padding: 14px;
+    padding: 16px;
     border-radius: 10px;
     text-decoration: none;
     box-shadow: 0 4px 24px rgba(200,244,0,.3);
@@ -1243,19 +1243,20 @@ footer { background:var(--darker);border-top:1px solid var(--border);padding:56p
 @media(max-width:960px) {
   /* Hero layout: texto arriba, imagen abajo a full width */
   .hero-inner {
-    grid-template-columns: 1fr 1fr !important;
-    gap: 16px;
-    align-items: center;
+    grid-template-columns: 1fr !important;
+    gap: 20px;
   }
   .hero-h1 {
-    font-size: clamp(20px, 5vw, 30px) !important;
+    font-size: clamp(28px, 7vw, 38px) !important;
     letter-spacing: -0.5px !important;
     margin-bottom: 8px !important;
   }
   .hero-sub-hook { font-size: 16px !important; margin-bottom: 14px !important; }
   .hero-desc { font-size: 13px !important; margin-bottom: 20px !important; line-height: 1.6; }
   .hero-pill { margin-bottom: 16px; }
-  .hero-actions { gap: 10px; }
+  .hero-actions { gap: 8px; flex-wrap: nowrap; }
+  .btn-primary { white-space: nowrap !important; font-size: 12px !important; padding: 11px 16px !important; }
+  .btn-ghost { white-space: nowrap !important; font-size: 12px !important; padding: 10px 14px !important; }
   .hero-product {
     display: block !important;
     width: 100% !important;
@@ -1537,8 +1538,8 @@ footer { background:var(--darker);border-top:1px solid var(--border);padding:56p
 <div class="mob-menu" id="mob-menu">
   <button class="mob-menu-close" onclick="toggleMobMenu()">✕ Cerrar</button>
   <nav class="mob-nav-links">
-    <a class="mob-nav-link" href="#problema" onclick="toggleMobMenu()">El Problema</a>
-    <a class="mob-nav-link" href="#como-funciona" onclick="toggleMobMenu()">Cómo Funciona</a>
+    <a class="mob-nav-link" href="#problema" onclick="toggleMobMenu(); setTimeout(function(){document.getElementById('problema').scrollIntoView({behavior:'smooth'})},300)">El Problema</a>
+    <a class="mob-nav-link" href="#como-funciona" onclick="toggleMobMenu(); setTimeout(function(){document.getElementById('como-funciona').scrollIntoView({behavior:'smooth'})},300)">Cómo Funciona</a>
   </nav>
 
   <div class="mob-nav-section">🏟️ Comunidad</div>
@@ -1718,7 +1719,7 @@ footer { background:var(--darker);border-top:1px solid var(--border);padding:56p
 <!-- ═══ RESULTADO EN 30 DÍAS ═══ -->
 <section class="section" style="padding-top:0;padding-bottom:80px">
   <div class="container">
-    <div class="reveal" style="background:var(--card);border:1px solid var(--border-lime);border-radius:16px;padding:48px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;overflow:hidden;position:relative" class="testimonials-grid">
+    <div class="reveal testimonials-grid" style="background:var(--card);border:1px solid var(--border-lime);border-radius:16px;padding:48px;overflow:hidden;position:relative">
       <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--lime),transparent)"></div>
       <div style="padding:24px 28px;border-right:1px solid var(--border)">
         <div style="font-size:32px;margin-bottom:12px">🎯</div>
@@ -1756,7 +1757,7 @@ footer { background:var(--darker);border-top:1px solid var(--border);padding:56p
       <div class="perf-visual-box">
         <div class="pvb-header">
           <div class="pvb-title">Reporte Semanal · Plantel Principal</div>
-          <div class="pvb-badge" style="white-space:nowrap;">EN VIVO</div>
+          <div class="pvb-badge">EN VIVO</div>
         </div>
         <div class="pvb-body">
           <div class="pvb-player-card">
@@ -1967,6 +1968,19 @@ function toggleMobMenu() {
   document.body.style.overflow = isOpen ? 'hidden' : '';
 }
 
+// Float CTA: visible after scrolling 500px
+(function() {
+  var floatCta = document.getElementById('mobile-float-cta');
+  if (!floatCta) return;
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 500) {
+      floatCta.classList.add('visible');
+    } else {
+      floatCta.classList.remove('visible');
+    }
+  }, { passive: true });
+})();
+
 // ─── MEGA MENU ───
 (function() {
   const wrap = document.querySelector('.nav-dropdown-wrap');
@@ -2012,23 +2026,6 @@ function toggleMobMenu() {
       btn.setAttribute('aria-expanded', 'false');
     }
   });
-})();
-
-// Float CTA: show after hero CTA is out of view
-(function() {
-  const floatCta = document.getElementById('mobile-float-cta');
-  const heroCta = document.querySelector('.btn-primary');
-  if (!floatCta || !heroCta) return;
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (!e.isIntersecting) {
-        floatCta.classList.add('visible');
-      } else {
-        floatCta.classList.remove('visible');
-      }
-    });
-  }, { threshold: 0 });
-  obs.observe(heroCta);
 })();
 
 // Scroll progress
