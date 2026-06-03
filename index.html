@@ -1153,21 +1153,27 @@ footer { background:var(--darker);border-top:1px solid var(--border);padding:56p
 }
 
 @media(max-width:960px){
+  /* ── NAV ── */
   nav { padding: 14px 20px }
   .nav-right { display: none }
   .nav-hamburger { display: flex }
 
-  /* urgency banner */
+  /* ── URGENCY BANNER ── */
   .urgency-banner-inner { flex-direction: column; gap: 8px; text-align: center; padding: 12px 16px }
   .urgency-text { font-size: 12px }
 
-  /* hero */
-  .hero { padding: 48px 20px 60px }
-  .hero-inner { grid-template-columns: 1fr; gap: 40px }
-  .hero-product { display: none }
-  .hero-h { font-size: clamp(42px, 10vw, 72px) }
+  /* ── HERO ── */
+  .hero { padding: 40px 20px 90px !important }
+  .hero-inner { grid-template-columns: 1fr; gap: 28px }
+  .hero-product { display: block !important; width: 100% !important; margin: 0 !important }
+  .hero-h1 { font-size: clamp(30px, 8vw, 44px) !important; letter-spacing: -1px !important; line-height: 1.05 !important }
+  .hero-sub-hook { font-size: 16px !important }
+  .hero-desc { font-size: 14px !important }
+  .hero-chip { display: none !important }
+  .hero-actions { flex-wrap: wrap; gap: 10px }
+  body { padding-bottom: 80px }
 
-  /* sections */
+  /* ── SECTIONS ── */
   .section { padding: 60px 20px }
   .problem-split { grid-template-columns: 1fr }
   .prob-col-before { border-right: none; border-bottom: 2px solid var(--darker) }
@@ -1182,104 +1188,41 @@ footer { background:var(--darker);border-top:1px solid var(--border);padding:56p
   .team-grid { grid-template-columns: 1fr; max-width: 100% }
   .footer-top { flex-direction: column }
 
-  /* resultado 30 dias - scroll horizontal */
-  .results-grid {
-    display: flex !important;
-    overflow-x: auto;
-    gap: 14px !important;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 12px;
-  }
+  /* ── TESTIMONIALS: 1 columna ── */
+  .testimonials-grid { display: grid !important; grid-template-columns: 1fr !important; gap: 0 !important }
+  .testimonials-grid > div { border-right: none !important; border-bottom: 1px solid var(--border); padding: 24px 20px !important }
+  .testimonials-grid > div:last-child { border-bottom: none }
+
+  /* ── RESULTS scroll horizontal ── */
+  .results-grid { display: flex !important; overflow-x: auto; gap: 14px !important; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; padding-bottom: 12px }
   .results-grid::-webkit-scrollbar { display: none }
-  .result-card {
-    min-width: 260px !important;
-    scroll-snap-align: start;
-    flex-shrink: 0;
-  }
+  .result-card { min-width: 260px !important; scroll-snap-align: start; flex-shrink: 0 }
 }
 
 
 /* ── FLOATING CTA MOBILE ── */
 .testimonials-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px; }
 
-#mobile-float-cta {
-  display: none;
-  opacity: 0;
-  transition: opacity .3s;
-  pointer-events: none;
-}
-#mobile-float-cta.visible {
-  opacity: 1;
-  pointer-events: auto;
-}
+#mobile-float-cta { display: none; }
 @media(max-width:960px) {
   #mobile-float-cta {
     display: block;
     position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    bottom: 0; left: 0; right: 0;
     z-index: 400;
-    padding: 12px 20px 20px;
+    padding: 10px 20px 18px;
     background: linear-gradient(to top, var(--darker) 70%, transparent);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s;
   }
+  #mobile-float-cta.visible { opacity: 1; pointer-events: auto; }
   #mobile-float-cta a {
-    display: block;
-    width: 100%;
-    text-align: center;
-    background: var(--lime);
-    color: #0E0E0E;
-    font-family: 'Syne', sans-serif;
-    font-size: 16px;
-    font-weight: 800;
-    padding: 16px;
-    border-radius: 10px;
-    text-decoration: none;
+    display: block; width: 100%; text-align: center;
+    background: var(--lime); color: #0E0E0E;
+    font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 800;
+    padding: 14px; border-radius: 10px; text-decoration: none;
     box-shadow: 0 4px 24px rgba(200,244,0,.3);
-  }
-}
-
-@media(max-width:960px) {
-  /* Hero layout: texto arriba, imagen abajo a full width */
-  .hero-inner {
-    grid-template-columns: 1fr !important;
-    gap: 20px;
-  }
-  .hero-h1 {
-    font-size: clamp(28px, 7vw, 38px) !important;
-    letter-spacing: -0.5px !important;
-    margin-bottom: 8px !important;
-  }
-  .hero-sub-hook { font-size: 16px !important; margin-bottom: 14px !important; }
-  .hero-desc { font-size: 13px !important; margin-bottom: 20px !important; line-height: 1.6; }
-  .hero-pill { margin-bottom: 16px; }
-  .hero-actions { gap: 8px; flex-wrap: nowrap; }
-  .btn-primary { white-space: nowrap !important; font-size: 12px !important; padding: 11px 16px !important; }
-  .btn-ghost { white-space: nowrap !important; font-size: 12px !important; padding: 10px 14px !important; }
-  .hero-product {
-    display: block !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 !important;
-  }
-  .hero-product .product-frame img { border-radius: 12px; }
-  .hero-chip { display: none !important; }
-  /* Padding bottom para que el CTA flotante no tape contenido */
-  .hero { padding-bottom: 90px !important; }
-  body { padding-bottom: 80px; }
-
-  /* Testimonials en columna */
-  .testimonials-grid {
-    grid-template-columns: 1fr !important;
-    gap: 0 !important;
-  }
-  .testimonials-grid > div {
-    border-right: none !important;
-    border-bottom: 1px solid var(--border);
-  }
-  .testimonials-grid > div:last-child {
-    border-bottom: none;
   }
 }
 </style>
@@ -1757,7 +1700,7 @@ footer { background:var(--darker);border-top:1px solid var(--border);padding:56p
       <div class="perf-visual-box">
         <div class="pvb-header">
           <div class="pvb-title">Reporte Semanal · Plantel Principal</div>
-          <div class="pvb-badge">EN VIVO</div>
+          <div class="pvb-badge" style="white-space:nowrap;">EN VIVO</div>
         </div>
         <div class="pvb-body">
           <div class="pvb-player-card">
