@@ -169,7 +169,7 @@ nav {
 
 .hero-h1 {
   font-family: 'Syne', sans-serif;
-  font-size: clamp(36px, 3.5vw, 54px);
+  font-size: clamp(36px, 3vw, 46px);
   font-weight: 800;
   line-height: 1.04;
   letter-spacing: -2px;
@@ -1200,6 +1200,8 @@ footer { background:var(--darker);border-top:1px solid var(--border);padding:56p
 }
 
 
+.testimonials-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px; }
+
 /* ── FLOATING CTA MOBILE ── */
 #mobile-float-cta {
   display: none;
@@ -1259,8 +1261,7 @@ footer { background:var(--darker);border-top:1px solid var(--border);padding:56p
   body { padding-bottom: 80px; }
 
   /* Testimonials en columna */
-  .testimonials-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px; }
-/* mobile override */ .testimonials-grid {
+  .testimonials-grid {
     grid-template-columns: 1fr !important;
     gap: 0 !important;
   }
