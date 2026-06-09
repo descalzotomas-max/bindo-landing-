@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Bindo · Contactos Evento</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0 }
+body { font-family: 'DM Sans', sans-serif; background: #0E0E0E; color: #DEDEDE; min-height: 100vh; padding-bottom: 40px }
+:root { --lime: #C8F400; --card: #1A1A1A; --border: rgba(255,255,255,0.08); --border-lime: rgba(200,244,0,0.2); --muted: #666 }
+
+header { background: #141414; border-bottom: 1px solid var(--border); padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10 }
+.header-left { display: flex; align-items: center; gap: 10px }
+.header-title { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 800; color: #fff }
+.header-sub { font-size: 11px; color: var(--muted); margin-top: 1px }
+.count-badge { background: var(--lime); color: #0E0E0E; font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 800; padding: 4px 10px; border-radius: 100px }
+
+.form-section { padding: 20px; border-bottom: 1px solid var(--border) }
+.form-title { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: var(--lime); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 14px }
+
+.field { margin-bottom: 12px }
+.field label { display: block; font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 5px }
+.field input, .field textarea, .field select {
+  width: 100%; background: #222; border: 1px solid var(--border);
+  border-radius: 8px; padding: 12px 14px; color: #fff;
+  font-family: 'DM Sans', sans-serif; font-size: 15px; outline: none;
+  -webkit-appearance: none; transition: border-color .15s;
+}
+.field input:focus, .field textarea:focus, .field select:focus { border-color: var(--border-lime) }
+.field input::placeholder, .field textarea::placeholder { color: #444 }
+.field textarea { height: 72px; resize: none; line-height: 1.5 }
+.field select { color: #fff }
+.field select option { background: #222; color: #fff }
+
+.tipo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px }
+.tipo-btn {
+  padding: 10px 8px; border: 1px solid var(--border); border-radius: 8px;
+  background: #222; color: var(--muted); font-size: 12px; font-weight: 600;
+  text-align: center; cursor: pointer; transition: all .15s; user-select: none;
+  font-family: 'DM Sans', sans-serif;
+}
+.tipo-btn.selected { border-color: var(--lime); background: rgba(200,244,0,0.08); color: var(--lime) }
+
+.btn-add {
+  width: 100%; padding: 15px; background: var(--lime); color: #0E0E0E;
+  border: none; border-radius: 10px; font-family: 'Syne', sans-serif;
+  font-size: 15px; font-weight: 800; cursor: pointer; margin-top: 4px;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  transition: opacity .15s;
+}
+.btn-add:active { opacity: 0.8 }
+
+.list-section { padding: 20px }
+.list-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px }
+.list-title { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: #fff }
+.btn-export {
+  background: transparent; border: 1px solid var(--border-lime); color: var(--lime);
+  padding: 7px 14px; border-radius: 7px; font-family: 'Syne', sans-serif;
+  font-size: 12px; font-weight: 700; cursor: pointer; letter-spacing: 0.3px;
+}
+
+.contact-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+  padding: 14px 16px; margin-bottom: 10px; position: relative;
+}
+.contact-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 6px }
+.contact-name { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; color: #fff }
+.contact-empresa { font-size: 13px; color: var(--muted); margin-top: 1px }
+.contact-puesto { font-size: 12px; color: #555; margin-top: 1px }
+.tipo-tag {
+  font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 4px;
+  white-space: nowrap; flex-shrink: 0; font-family: 'Syne', sans-serif; letter-spacing: 0.3px;
+}
+.tag-cliente { background: rgba(200,244,0,0.1); color: var(--lime); border: 1px solid var(--border-lime) }
+.tag-advisor { background: rgba(74,158,255,0.1); color: #4a9eff; border: 1px solid rgba(74,158,255,0.2) }
+.tag-sponsor { background: rgba(255,193,7,0.1); color: #ffc107; border: 1px solid rgba(255,193,7,0.2) }
+.tag-partner { background: rgba(155,89,182,0.1); color: #b06de0; border: 1px solid rgba(155,89,182,0.2) }
+.tag-marca { background: rgba(61,220,132,0.1); color: #3ddc84; border: 1px solid rgba(61,220,132,0.2) }
+.tag-otro { background: rgba(255,255,255,0.05); color: var(--muted); border: 1px solid var(--border) }
+.contact-nota { font-size: 13px; color: #888; line-height: 1.5; margin-top: 8px; font-style: italic }
+.contact-time { font-size: 10px; color: #444; margin-top: 8px }
+.btn-delete { background: none; border: none; color: #444; font-size: 16px; cursor: pointer; padding: 2px 6px; line-height: 1 }
+.btn-delete:active { color: #ff5a5a }
+
+.empty-state { text-align: center; padding: 40px 20px; color: var(--muted) }
+.empty-icon { font-size: 36px; margin-bottom: 10px }
+.empty-text { font-size: 14px; line-height: 1.6 }
+
+.toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
+  background: #1E1E1E; border: 1px solid var(--border-lime); color: var(--lime);
+  padding: 12px 20px; border-radius: 10px; font-size: 14px; font-weight: 600;
+  transition: transform .25s ease; z-index: 100; white-space: nowrap;
+  font-family: 'Syne', sans-serif;
+}
+.toast.show { transform: translateX(-50%) translateY(0) }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <div>
+      <div class="header-title">🏟️ Congreso Sports Biz</div>
+      <div class="header-sub">Jun 9-10 · Buenos Aires</div>
+    </div>
+  </div>
+  <div class="count-badge" id="count">0</div>
+</header>
+
+<div class="form-section">
+  <div class="form-title">+ Nuevo contacto</div>
+
+  <div class="field">
+    <label>Nombre</label>
+    <input type="text" id="f-nombre" placeholder="Nombre y apellido" autocomplete="off">
+  </div>
+  <div class="field">
+    <label>Empresa / Club / Organización</label>
+    <input type="text" id="f-empresa" placeholder="¿De dónde es?" autocomplete="off">
+  </div>
+  <div class="field">
+    <label>Puesto</label>
+    <input type="text" id="f-puesto" placeholder="Rol o cargo" autocomplete="off">
+  </div>
+
+  <div class="field">
+    <label>Tipo de contacto</label>
+    <div class="tipo-grid">
+      <div class="tipo-btn" data-tipo="Cliente" onclick="selectTipo(this)">🏟️ Cliente</div>
+      <div class="tipo-btn" data-tipo="Advisor" onclick="selectTipo(this)">🎯 Advisor</div>
+      <div class="tipo-btn" data-tipo="Sponsor" onclick="selectTipo(this)">💰 Sponsor</div>
+      <div class="tipo-btn" data-tipo="Partner" onclick="selectTipo(this)">🤝 Partner</div>
+      <div class="tipo-btn" data-tipo="Marca ecosistema" onclick="selectTipo(this)">⚡ Marca ecosistema</div>
+      <div class="tipo-btn" data-tipo="Otro" onclick="selectTipo(this)">📌 Otro</div>
+    </div>
+  </div>
+
+  <div class="field">
+    <label>Nota rápida</label>
+    <textarea id="f-nota" placeholder="Contexto, próximo paso, de qué hablaron..."></textarea>
+  </div>
+
+  <button class="btn-add" onclick="addContact()">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 3v12M3 9h12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+    Guardar contacto
+  </button>
+</div>
+
+<div class="list-section">
+  <div class="list-header">
+    <div class="list-title">Contactos del evento</div>
+    <button class="btn-export" onclick="exportCSV()">Exportar CSV</button>
+  </div>
+  <div id="contact-list"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const STORAGE_KEY = 'bindo_evento_jun2026';
+
+function getContacts() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+  catch(e) { return []; }
+}
+
+function saveContacts(list) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+}
+
+let selectedTipo = '';
+
+function selectTipo(el) {
+  document.querySelectorAll('.tipo-btn').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedTipo = el.dataset.tipo;
+}
+
+function addContact() {
+  const nombre = document.getElementById('f-nombre').value.trim();
+  const empresa = document.getElementById('f-empresa').value.trim();
+  const puesto = document.getElementById('f-puesto').value.trim();
+  const nota = document.getElementById('f-nota').value.trim();
+
+  if (!nombre) {
+    showToast('⚠️ El nombre es obligatorio');
+    document.getElementById('f-nombre').focus();
+    return;
+  }
+
+  const contact = {
+    id: Date.now(),
+    nombre, empresa, puesto,
+    tipo: selectedTipo || 'Otro',
+    nota,
+    time: new Date().toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' }),
+    date: new Date().toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit' })
+  };
+
+  const list = getContacts();
+  list.unshift(contact);
+  saveContacts(list);
+  renderList();
+
+  // Clear form
+  document.getElementById('f-nombre').value = '';
+  document.getElementById('f-empresa').value = '';
+  document.getElementById('f-puesto').value = '';
+  document.getElementById('f-nota').value = '';
+  document.querySelectorAll('.tipo-btn').forEach(b => b.classList.remove('selected'));
+  selectedTipo = '';
+
+  showToast('✅ ' + nombre + ' guardado');
+  document.getElementById('f-nombre').focus();
+}
+
+function deleteContact(id) {
+  const list = getContacts().filter(c => c.id !== id);
+  saveContacts(list);
+  renderList();
+}
+
+function tipoClass(tipo) {
+  const map = {
+    'Cliente': 'tag-cliente',
+    'Advisor': 'tag-advisor',
+    'Sponsor': 'tag-sponsor',
+    'Partner': 'tag-partner',
+    'Marca ecosistema': 'tag-marca',
+    'Otro': 'tag-otro'
+  };
+  return map[tipo] || 'tag-otro';
+}
+
+function renderList() {
+  const list = getContacts();
+  const el = document.getElementById('contact-list');
+  document.getElementById('count').textContent = list.length;
+
+  if (list.length === 0) {
+    el.innerHTML = '<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-text">Todavía no cargaste contactos.<br>Usá el formulario de arriba.</div></div>';
+    return;
+  }
+
+  el.innerHTML = list.map(c => `
+    <div class="contact-card">
+      <div class="contact-card-top">
+        <div>
+          <div class="contact-name">${c.nombre}</div>
+          ${c.empresa ? `<div class="contact-empresa">${c.empresa}</div>` : ''}
+          ${c.puesto ? `<div class="contact-puesto">${c.puesto}</div>` : ''}
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+          <span class="tipo-tag ${tipoClass(c.tipo)}">${c.tipo}</span>
+          <button class="btn-delete" onclick="deleteContact(${c.id})">✕</button>
+        </div>
+      </div>
+      ${c.nota ? `<div class="contact-nota">"${c.nota}"</div>` : ''}
+      <div class="contact-time">${c.date} · ${c.time}</div>
+    </div>
+  `).join('');
+}
+
+function exportCSV() {
+  const list = getContacts();
+  if (list.length === 0) { showToast('No hay contactos para exportar'); return; }
+
+  const headers = ['Nombre', 'Empresa', 'Puesto', 'Tipo', 'Nota', 'Fecha', 'Hora'];
+  const rows = list.map(c => [
+    c.nombre, c.empresa, c.puesto, c.tipo,
+    c.nota.replace(/"/g, '""'),
+    c.date, c.time
+  ].map(v => `"${v}"`).join(','));
+
+  const csv = [headers.join(','), ...rows].join('\n');
+  const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `bindo-contactos-evento-${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('📥 CSV exportado');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+// Enter key saves contact
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') addContact();
+});
+
+renderList();
+</script>
+</body>
+</html>
