@@ -535,7 +535,9 @@
   // con generador-encuesta.html.
   const urlParams = new URLSearchParams(window.location.search);
   let club = (urlParams.get('club') || '').trim();
-  const logoUrl = (urlParams.get('logo') || '').trim();
+  const logoId = (urlParams.get('logoId') || '').trim();
+  const logoUrlLegacy = (urlParams.get('logo') || '').trim(); // compatibilidad con links viejos
+  const logoUrl = logoId ? 'https://drive.google.com/uc?export=view&id=' + logoId : logoUrlLegacy;
   const deportesParam = (urlParams.get('deportes') || '').trim();
   const otrosDeportesParam = (urlParams.get('otrosDeportes') || '').trim();
 
