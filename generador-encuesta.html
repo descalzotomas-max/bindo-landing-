@@ -200,7 +200,18 @@
     if (!this.checked) document.getElementById('otroDeporteInput').value = '';
   });
 
-  document.getElementById('generarBtn').addEventListener('click', () => {
+  async function acortarLink(urlLarga) {
+    try {
+      const resp = await fetch('https://v.gd/create.php?format=simple&url=' + encodeURIComponent(urlLarga));
+      const texto = (await resp.text()).trim();
+      if (resp.ok && texto.indexOf('http') === 0) return texto;
+      return null; // el servicio devolvió un error, usamos el link largo
+    } catch (err) {
+      return null; // sin conexión al acortador, usamos el link largo igual
+    }
+  }
+
+  document.getElementById('generarBtn').addEventListener('click', async () => {
     const club = document.getElementById('clubInput').value.trim();
     const driveLink = document.getElementById('driveInput').value.trim();
 
@@ -237,7 +248,30 @@
       : '';
 
     const linkFinal = SURVEY_BASE_URL + '?club=' + encodeURIComponent(club) + logoParam + deportesParam + otrosDeportesParam;
-    document.getElementById('linkGenerado').textContent = linkFinal;
+
+    const generarBtn = document.getElementById('generarBtn');
+    generarBtn.disabled = true;
+    generarBtn.textContent = 'Generando…';
+
+    const linkCorto = await acortarLink(linkFinal);
+
+    generarBtn.disabled = false;
+    generarBtn.textContent = 'Generar link';
+
+    const linkGenerado = document.getElementById('linkGenerado');
+    const avisoPrevio = document.getElementById('avisoAcortador');
+    if (avisoPrevio) avisoPrevio.remove();
+
+    if (linkCorto) {
+      linkGenerado.textContent = linkCorto;
+    } else {
+      linkGenerado.textContent = linkFinal;
+      const aviso = document.createElement('p');
+      aviso.id = 'avisoAcortador';
+      aviso.style.cssText = 'font-size:12px; color:var(--text-faint); margin-top:8px;';
+      aviso.textContent = 'No se pudo acortar el link (puede pasar si el servicio está caído). Este es el link completo, igual funciona perfecto.';
+      linkGenerado.parentNode.insertBefore(aviso, linkGenerado.nextSibling);
+    }
     document.getElementById('resultado').classList.add('show');
     document.getElementById('copyBtn').classList.remove('copied');
     document.getElementById('copyBtn').textContent = 'Copiar link';
